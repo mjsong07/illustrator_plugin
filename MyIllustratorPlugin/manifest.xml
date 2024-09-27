@@ -1,0 +1,41 @@
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ExtensionManifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ExtensionBundleId="com.myillustratorplugin" ExtensionBundleVersion="1.0" Version="7.0">
+    <ExtensionList>
+        <Extension Id="com.myillustratorplugin.panel" Version="1.0"/>
+    </ExtensionList>
+    <ExecutionEnvironment>
+        <HostList>
+            <Host Name="ILST" Version="[26.0,]"/>  <!-- Illustrator version -->
+        </HostList>
+        <LocaleList>
+            <Locale Code="All"/>
+        </LocaleList>
+        <RequiredRuntimeList>
+            <RequiredRuntime Name="CSXS" Version="10.0"/>
+        </RequiredRuntimeList>
+        <DispatchInfoList>
+            <Extension Id="com.myillustratorplugin.panel">
+                <DispatchInfo>
+                    <Resources>
+                        <MainPath>./index.html</MainPath>
+                        <ScriptPath>./js/main.js</ScriptPath>
+                    </Resources>
+                    <Lifecycle>
+                        <AutoVisible>true</AutoVisible>
+                    </Lifecycle>
+                    <UI>
+                        <Type>Panel</Type>
+                        <Menu>My Plugin</Menu>
+                        <Geometry>
+                            <Size>
+                                <Height>400</Height>
+                                <Width>300</Width>
+                            </Size>
+                        </Geometry>
+                    </UI>
+                </DispatchInfo>
+            </Extension>
+        </DispatchInfoList>
+    </ExecutionEnvironment>
+</ExtensionManifest>
