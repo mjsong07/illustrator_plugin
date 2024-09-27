@@ -1,20 +1,13 @@
-﻿// var allFonts = app.textFonts;
-// var fontList = [];
-// for (var i = 0; i < allFonts.length; i++) {
-//     fontList.push(allFonts[i].name);
-// }
-// alert(fontList.join("\n"));
-// 检查是否有文档打开
+﻿// 检查是否有文档打开
 if (app.documents.length > 0) {
     var doc = app.activeDocument; // 获取当前活动文档
-
-    // 选择导出的路径
-    var exportPath = Folder.selectDialog("请选择一个导出的文件夹");
-    if (exportPath !== null) {
-
         // 选择要导入的 JSON 配置文件
         var jsonFile = File.openDialog("请选择一个配置好的语言的JSON文件", "*.json");
         if (jsonFile !== null) {
+            // 选择导出的路径
+            var exportPath = Folder.selectDialog("请选择一个导出的文件夹");
+            if (exportPath !== null) {
+      
             jsonFile.open("r");
             var jsonData = jsonFile.read();
             jsonFile.close();
@@ -74,10 +67,10 @@ if (app.documents.length > 0) {
             // 提示用户操作已完成
             alert("恭喜，所有文件生成导出到： " + exportPath);
         } else {
-            alert("没有选择JSON文件，程序退出");
+            alert("没有选择导出的文件夹，程序退出");
         }
-    } else {
-        alert("没有选择导出的文件夹，程序退出");
+    } else { 
+        alert("没有选择JSON文件，程序退出");
     }
 } else {
     alert("当前无被打开的文件,程序退出");

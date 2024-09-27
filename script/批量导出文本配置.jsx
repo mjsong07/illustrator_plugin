@@ -83,7 +83,7 @@ function rgbToHex(r, g, b) {
 
 // 获取用户选择的语言
 function getSelectedLanguages(languages) {
-    var dialog = new Window('dialog', 'Select Languages');
+    var dialog = new Window('dialog', '选择语言');
     var selected = [];
 
     // 创建复选框
