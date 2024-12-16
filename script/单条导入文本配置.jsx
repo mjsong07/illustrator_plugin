@@ -1,66 +1,48 @@
-﻿
-
-if (app.documents.length > 0) {  
+﻿if (app.documents.length > 0) {  
     // 从桌面选择 JSON 文件
-    var jsonFile = File.openDialog("请选择一个配置好的批量JSON文件", "*.json");
+    var jsonFile = File.openDialog("请选择一个导出的 JSON 文件", "*.json");
     if (jsonFile !== null) {
         jsonFile.open("r");
         var jsonData = jsonFile.read();
         jsonFile.close();
 
         // 解析 JSON 数据
-        var textData = parseJson(jsonData); // 使用手动实现的 parseJson 函数
+        var importedData = JSON.parse(jsonData);
 
-        // 获取文档中的所有文本框
+        // 获取当前文档中的所有文本框
         var doc = app.activeDocument;
         var textItems = doc.textFrames;
 
-        // 遍历 JSON 数据，更新相应的文本框内容及样式
-        for (var i = 0; i < textData.length; i++) {
-            var textObject = textData[i];
-            if (i < textItems.length) {
-                var textFrame = textItems[i];
-                textFrame.contents = textObject.content; // 更新文本框内容
-                
-                // 更新文本样式
-                var charAttributes = textFrame.textRange.characterAttributes;
-                
-                // 验证字体是否存在
-                try {
-                    var font = app.textFonts.getByName(textObject.font);
-                    charAttributes.textFont = font; // 设置字体
-                } catch (e) {
-                    alert("字体没有找到：" + textObject.font," 改用默认字体Arial-Black" ); 
-                    // 使用默认字体
-                    charAttributes.textFont = app.textFonts.getByName("Arial-Black"); // 或其他默认字体
-                }
+        // 遍历 JSON 数据并更新文档中的文本框
+        for (var i = 0; i < importedData.length; i++) {
+            var textObject = importedData[i];
+            var targetId = textObject.id;  // 使用 JSON 中的 id 来确定文本框
 
+            if (targetId < textItems.length) {
+                var textFrame = textItems[targetId];
+                textFrame.contents = textObject.content;  // 更新文本框内容
+
+                // 更新字体和字体大小
+                var charAttributes = textFrame.textRange.characterAttributes;
+                charAttributes.textFont = app.textFonts.getByName(textObject.font);
                 charAttributes.size = textObject.size;
 
-                // 将 HEX 颜色转换为 RGB
-                var rgbColor = hexToRgb(textObject.fillColor);
+                // 更新颜色
+                var newColor = hexToRgb(textObject.fillColor);
                 var fillColor = new RGBColor();
-                fillColor.red = rgbColor.r;
-                fillColor.green = rgbColor.g;
-                fillColor.blue = rgbColor.b;
+                fillColor.red = newColor.r;
+                fillColor.green = newColor.g;
+                fillColor.blue = newColor.b;
                 charAttributes.fillColor = fillColor;
             }
         }
 
-        // 提示用户操作已完成
-        
-        alert("恭喜，文本信息已替换"); 
+        alert("文本框颜色和内容已根据 JSON 文件更新");
     } else {
-        alert("没有选择JSON文件，程序退出");
+        alert("没有选择 JSON 文件，程序退出");
     }
-
-}else { 
-    alert("当前无被打开的文件,程序退出");
-}
-
-// 简单实现 JSON.parse
-function parseJson(jsonString) {
-    return eval('(' + jsonString + ')'); // 使用 eval 函数解析 JSON 字符串
+} else { 
+    alert("当前无被打开的文件，程序退出");
 }
 
 // HEX 转 RGB 函数
