@@ -20,10 +20,10 @@ for (var i = 0; i < textItems.length; i++) {
 }
 
 // 保存 CSV 文件到桌面，并设置为 UTF-8 编码
-saveAsCsv(allTextData, Folder.desktop + "/ai批量文本配置.csv");
+saveAsCsv(allTextData, Folder.desktop + "/ai文本配置.csv");
 
 // 提示用户文件已导出
-alert("文件已经导出到：" + Folder.desktop + "/ai批量文本配置.csv");
+alert("文件已经导出到：" + Folder.desktop + "/ai文本配置.csv");
 
 function buildCsvRow(data) {
     var row = [];
